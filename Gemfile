@@ -25,10 +25,7 @@ gem "turbo-rails"
 gem "stimulus-rails"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem "jbuilder"
-
-# Use Redis adapter to run Action Cable in production
-gem "redis", "~> 4.0"
+# gem "jbuilder"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
@@ -48,6 +45,27 @@ gem "bootsnap", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
+gem "rack-cors"
+gem 'devise'
+gem 'dotenv'
+gem 'devise-jwt'
+
+gem 'httparty', '0.21.0'
+gem 'whenever'
+
+gem 'paper_trail'
+
+gem 'faker'
+gem 'jsonapi-resources', '~> 0.9.12'
+gem 'annotate'
+
+gem 'aws-sdk-s3', '~> 1.103'
+gem 'sidekiq', '6.4.2'
+gem 'sidekiq-cron', '~> 1.1'
+gem 'redis', '~> 4.2.5'
+gem 'redis-rails', '5.0.2'
+gem 'aws-sdk-sqs', '~> 1.0.0.rc11'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
@@ -56,6 +74,11 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  gem 'byebug', '11.1.3', platforms: %i[mri mingw x64_mingw]
+  gem 'factory_bot_rails', '~> 6.2'
+  gem 'pry', '0.14.1'
+  gem 'rspec-rails', '~> 4.0.1'
+  gem 'simplecov', '~> 0.21.2'
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
@@ -70,3 +93,4 @@ group :test do
   gem "selenium-webdriver"
 
 end
+

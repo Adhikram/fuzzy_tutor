@@ -1,6 +1,15 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  devise_for :users
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  namespace :api do
+    namespace :v1 do
+      jsonapi_resources :users, only: %i[show update create] do
+        collection do
+          get :me
+          post :login
+          delete :logout
+        end
+      end
+    end
+  end
 end
