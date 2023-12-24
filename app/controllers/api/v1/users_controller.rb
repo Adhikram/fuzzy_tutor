@@ -12,6 +12,11 @@ module Api
       end
 
       def create
+        if User.find_by(phone: user_params['phone']).present?
+          return render_error(message: 'Phone number already exists')
+        end
+        return render_error(message: 'Email already exists') if User.find_by(email: user_params['email']).present?
+
         user = User.new(user_params)
         if user.save
           sign_in(user) # Automatically sign in the user after creation
@@ -47,7 +52,7 @@ module Api
       def user_params
         params.require(:data)
               .require(:attributes)
-              .permit(:email, :password, :phone, :name)
+              .permit(:email, :password, :user_type, :phone, :name)
       end
 
       def allowed_user_attributes

@@ -16,6 +16,12 @@ class ApplicationController < ActionController::API
     render_unauthorized
   end
 
+  def problem_setter_auth
+    return true if current_user&.user_type != 'student'
+
+    render_unauthorized('You are not authorized to access this page')
+  end
+
   # private
 
   # def set_current_user
