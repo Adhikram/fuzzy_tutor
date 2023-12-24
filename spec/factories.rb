@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
+  factory :paper_element do
+  end
+
+  factory :paper do
+  end
+
   factory :course do
   end
 

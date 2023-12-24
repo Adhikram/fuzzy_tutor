@@ -10,11 +10,16 @@ Rails.application.routes.draw do
           delete :logout
         end
       end
-      jsonapi_resources :courses, only: %i[index show create destroy update] do
+      jsonapi_resources :courses, only: %i[show create destroy update], param: :slug do
         collection do
           get :active_courses
         end
+        member do
+          get :papers
+        end
       end
+      jsonapi_resources :papers, only: %i[show create destroy update]
+      jsonapi_resources :paper_elements, only: %i[index show create destroy update]
     end
   end
 end

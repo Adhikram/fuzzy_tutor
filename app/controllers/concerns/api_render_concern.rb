@@ -3,11 +3,13 @@
 module ApiRenderConcern
   extend ActiveSupport::Concern
   def api_render(status_code, data = {})
+    sanitized_data = data.transform_values { |value| value.nil? ? '' : value }
+
     render json: {
       data: {
-        id: (data[:id] || data['id']),
-        type: data[:type],
-        attributes: data.except(:id, :type)
+        id: (sanitized_data[:id] || sanitized_data['id']),
+        type: sanitized_data[:type],
+        attributes: sanitized_data.except(:id, :type)
       }
     }, status: status_code
   end

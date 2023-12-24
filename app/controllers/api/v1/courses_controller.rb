@@ -4,6 +4,7 @@ module Api
   module V1
     class CoursesController < ApplicationController
       include JSONAPI::ActsAsResourceController
+      include ApplicationHelper
       before_action :user_auth
       before_action :problem_setter_auth, only: %i[create update destroy]
 
@@ -36,7 +37,7 @@ module Api
       def create
         course = Course.new(course_params)
         course.user_id = current_user.id
-        course.slug = "#{course.name.parameterize}_#{Digest::SHA1.hexdigest([Time.now, rand].join)[0, 6]}"
+        course.slug = "#{course.name.parameterize}-#{Digest::SHA1.hexdigest([Time.now, rand].join)[0, 6]}"
 
         if course.save
           render_success(course.slice(*allowed_course_attributes))
@@ -46,8 +47,10 @@ module Api
       end
 
       def destroy
-        course = Course.find_by(slug: params[:id])
-        render_error('Course not found') if course.blank?
+        fetch_id_from_slug(Course, :id, :id, params)
+        course = Course.find_by(id: params[:id])
+        return render_error('Course not found') if course.blank?
+
         if course.destroy
           render_success(message: 'Course deleted successfully')
         else
@@ -56,7 +59,8 @@ module Api
       end
 
       def update
-        course = Course.find_by(slug: params[:id])
+        fetch_id_from_slug(Course, :id, :id, params)
+        course = Course.find_by(id: params[:id])
         return render_error('Course not found') if course.blank?
 
         if course.update(course_params)
@@ -77,6 +81,7 @@ module Api
 
         data = sorted_courses.map do |course|
           {
+            id: course.id,
             name: course.name,
             description: course.description,
             active_status: course.active_status,
@@ -89,16 +94,15 @@ module Api
         render_success(data: data)
       end
 
-      private
+      def papers
+        fetch_id_from_slug(Course, :id, :id, params)
 
-      def course_params
-        params.require(:data)
-              .require(:attributes)
-              .permit(:name, :description, :active_status, :course_type)
-      end
+        return render_error('Course not found') if params[:id].blank?
 
-      def allowed_course_attributes
-        %i[name description active_status course_type slug created_at updated_at]
+        papers = current_user.fetch_papers(params[:id])
+        return render_error('Papers not found') if papers.blank?
+
+        render_success(data: papers.map { |paper| paper.slice(*allowed_paper_attributes) })
       end
     end
   end
