@@ -1,0 +1,2 @@
+class PaperSubmisison < ApplicationRecord
+end

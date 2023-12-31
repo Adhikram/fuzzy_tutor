@@ -6,6 +6,6 @@ module PapersHelper
   end
 
   def allowed_paper_attributes
-    %i[title description active_status resource_link paper_type slug course_id user_id paper_element_id]
+    %i[id title description active_status resource_link paper_type slug course_id user_id paper_element_id]
   end
 end

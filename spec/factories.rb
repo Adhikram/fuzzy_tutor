@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
+  factory :paper_submisison do
+  end
+
   factory :paper_element do
   end
 

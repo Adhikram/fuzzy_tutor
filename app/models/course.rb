@@ -1,5 +1,6 @@
 class Course < ApplicationRecord
   belongs_to :user
+  has_many :papers
   enum course_type: %i[free paid]
   before_save :update_slug, if: :name_changed?
 

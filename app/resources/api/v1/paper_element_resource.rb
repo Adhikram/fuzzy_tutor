@@ -3,7 +3,7 @@
 module Api
     module V1
       class PaperElementResource < JSONAPI::Resource
-        attributes :element_type, :text, :link, :marks, :negative_marks, :meta_data, :created_at, :updated_at, :parent_id, :paper_id
+        attributes :id, :element_type, :text, :link, :marks, :negative_marks, :meta_data, :created_at, :updated_at, :parent_id, :paper_id
         filter :parent_id
       end
     end

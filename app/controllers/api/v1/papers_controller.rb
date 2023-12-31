@@ -6,7 +6,7 @@ module Api
       include JSONAPI::ActsAsResourceController
       include ApplicationHelper
       before_action :user_auth
-      before_action :problem_setter_auth, only: %i[create update destroy]
+      before_action :problem_setter_auth, only: %i[create update destroy preview]
 
       def show
         fetch_id_from_slug(Paper, :id, :id, params)
@@ -23,8 +23,6 @@ module Api
         paper.user_id = current_user.id
 
         paper.slug = "#{paper.title.parameterize}-#{Digest::SHA1.hexdigest([Time.now, rand].join)[0, 6]}"
-        paper_element = PaperElement.create!(element_type: 0, text: paper.title)
-        paper.paper_element_id = paper_element.id
 
         if paper.save
           paper_element.update(paper_id: paper.id)
@@ -57,6 +55,16 @@ module Api
         else
           render_error('Failed to delete paper')
         end
+      end
+
+      def preview
+        fetch_id_from_slug(Paper, :id, :id, params)
+        paper = Paper.find_by(id: params[:id])
+        return render_error('Paper not found') if paper.blank? || params[:id].blank?
+
+        main_section = PaperElement.find_by(id: paper.paper_element_id)
+        data = main_section.get_preview_data if main_section.present?
+        render_success(data.as_json)
       end
     end
   end

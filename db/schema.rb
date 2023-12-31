@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_24_160541) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_27_172615) do
   create_table "courses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", default: "Temp Courses", null: false
     t.string "description"
@@ -39,6 +39,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_24_160541) do
     t.index ["parent_id"], name: "index_paper_elements_on_parent_id"
   end
 
+  create_table "paper_submisisons", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.boolean "is_best_submission", default: false
+    t.string "metadeta", default: ""
+    t.string "result_metadata", default: ""
+    t.integer "score", default: 0
+    t.string "slug", null: false
+    t.datetime "started_at"
+    t.datetime "submitted_at"
+    t.datetime "evaluated_at"
+    t.bigint "paper_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["paper_id"], name: "index_paper_submisisons_on_paper_id"
+    t.index ["user_id", "paper_id"], name: "index_paper_submisisons_on_user_id_and_paper_id"
+    t.index ["user_id"], name: "index_paper_submisisons_on_user_id"
+  end
+
   create_table "papers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
     t.string "description"
@@ -51,6 +69,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_24_160541) do
     t.bigint "paper_element_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "duration", default: 60
     t.index ["course_id"], name: "index_papers_on_course_id"
     t.index ["paper_element_id"], name: "index_papers_on_paper_element_id"
     t.index ["user_id"], name: "index_papers_on_user_id"
@@ -74,6 +93,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_24_160541) do
 
   add_foreign_key "courses", "users"
   add_foreign_key "paper_elements", "paper_elements", column: "parent_id", on_delete: :cascade
+  add_foreign_key "paper_submisisons", "papers"
+  add_foreign_key "paper_submisisons", "users"
   add_foreign_key "papers", "courses"
   add_foreign_key "papers", "paper_elements"
   add_foreign_key "papers", "users"
