@@ -1,34 +1,24 @@
-# MySQL. Versions 5.5.8 and up are supported.
-#
-# Install the MySQL driver
-#   gem install mysql2
-#
-# Ensure the MySQL gem is defined in your Gemfile
-#   gem "mysql2"
-#
-# And be sure to use new-style password hashing:
-#   https://dev.mysql.com/doc/refman/5.7/en/password-hashing.html
-#
 default: &default
-  adapter: mysql2
-  encoding: utf8mb4
+  adapter: postgresql
+  # encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  database: fuzzy_tutor
-  username: root
-  password: Test@123
-  # socket: /var/run/mysqld/mysqld.sock
+  database: <%= ENV.fetch("DB_NAME") { 'fuzzy_tutor' } %>    # Changed to use "DB_NAME" instead of "DB_Name"
+  username: <%= ENV.fetch("DB_USERNAME") { 'postgres' } %>
+  password: <%= ENV.fetch("DB_PASSWORD") { 'Test123' } %>
 
 development:
   <<: *default
   database: fuzzy_tutor_dev
+
 test:
   <<: *default
   database: fuzzy_tutor_test
+
 production:
   <<: *default
-  pool: <%= ENV["RAILS_MAX_THREADS"] { 5 } %>
-  database: fuzzy_tutor_prod
-  host: <%= ENV["MYSQL_HOST"]  { localhost } %>
-  username: <%= ENV["MYSQL_USERNAME"]  %>
-  password: <%= ENV["MYSQL_PASSWORD"] %>
+  pool: <%= ENV["RAILS_MAX_THREADS"] || 5 %>
+  database: <%= ENV.fetch("DB_NAME") { 'fuzzy_tutor_prod' } %>   # Changed to use "DB_NAME" instead of "DB_Name"
+  host: <%= ENV.fetch("DB_HOST") { 'localhost' } %>
+  username: <%= ENV.fetch("DB_USERNAME") { 'postgres' } %>
+  password: <%= ENV.fetch("DB_PASSWORD") { 'Test123' } %>
   encoding: utf8

@@ -11,7 +11,10 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2023_12_27_172615) do
-  create_table "courses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "courses", force: :cascade do |t|
     t.string "name", default: "Temp Courses", null: false
     t.string "description"
     t.boolean "active_status", default: false
@@ -25,7 +28,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_27_172615) do
     t.index ["user_id"], name: "index_courses_on_user_id"
   end
 
-  create_table "paper_elements", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "paper_elements", force: :cascade do |t|
     t.integer "element_type"
     t.text "text"
     t.text "link"
@@ -39,7 +42,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_27_172615) do
     t.index ["parent_id"], name: "index_paper_elements_on_parent_id"
   end
 
-  create_table "paper_submisisons", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "paper_submisisons", force: :cascade do |t|
     t.boolean "is_best_submission", default: false
     t.string "metadeta", default: ""
     t.string "result_metadata", default: ""
@@ -57,7 +60,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_27_172615) do
     t.index ["user_id"], name: "index_paper_submisisons_on_user_id"
   end
 
-  create_table "papers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "papers", force: :cascade do |t|
     t.string "title"
     t.string "description"
     t.boolean "active_status", default: false
@@ -75,7 +78,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_27_172615) do
     t.index ["user_id"], name: "index_papers_on_user_id"
   end
 
-  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "phone", default: "", null: false
