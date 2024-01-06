@@ -43,7 +43,18 @@ else
     echo "Ruby 3.0.6 is already installed."
 fi
 
-apt-get install libmysqlclient-dev
+# Install necessary libraries for mysql2 gem
+# Check the system package manager and install the required packages
+if command -v apt-get &> /dev/null; then
+    sudo apt-get install -y libmysqlclient-dev
+elif command -v yum &> /dev/null; then
+    sudo yum install -y mysql-devel
+elif command -v brew &> /dev/null; then
+    brew install mysql-client
+else
+    echo "Package manager not found. Please install libmysqlclient-dev or equivalent manually."
+    exit 1
+fi
 
 # Install dependencies using bundle install
 bundle install
