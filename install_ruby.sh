@@ -1,5 +1,4 @@
 #!/bin/bash
-#To RUN : - chmod +x install_ruby.sh && ./install_ruby.sh
 
 # Check if rbenv is installed
 if ! command -v rbenv &> /dev/null; then
