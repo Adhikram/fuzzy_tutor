@@ -43,5 +43,7 @@ else
     echo "Ruby 3.0.6 is already installed."
 fi
 
+apt-get install libmysqlclient-dev
+
 # Install dependencies using bundle install
 bundle install
