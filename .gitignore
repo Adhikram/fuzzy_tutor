@@ -32,3 +32,4 @@
 
 .byebug_history
 /coverage
+.env
