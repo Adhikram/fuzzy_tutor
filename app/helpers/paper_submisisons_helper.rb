@@ -3,7 +3,7 @@ module PaperSubmisisonsHelper
         params.require(:data)
         .require(:attributes)
         .permit(
-            :paper_slug,
+            :paper_id,
             :started_at,
             meta_data: [] # Permit meta_data as an array
         )

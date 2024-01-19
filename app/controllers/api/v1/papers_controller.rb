@@ -66,6 +66,16 @@ module Api
         data = main_section.get_preview_data if main_section.present?
         render_success(data.as_json)
       end
+
+      def answer_preview
+        fetch_id_from_slug(Paper, :id, :id, params)
+        paper = Paper.find_by(id: params[:id])
+        return render_error('Paper not found') if paper.blank? || params[:id].blank?
+
+        main_section = PaperElement.find_by(id: paper.paper_element_id)
+        data = main_section.get_answer_preview if main_section.present?
+        render_success({ paper.paper_element_id => data }.as_json)
+      end
     end
   end
 end

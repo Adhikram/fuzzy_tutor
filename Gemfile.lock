@@ -184,7 +184,6 @@ GEM
     minitest (5.20.0)
     msgpack (1.7.2)
     multi_xml (0.6.0)
-    mysql2 (0.5.5)
     net-imap (0.4.7)
       date
       net-protocol
@@ -201,6 +200,7 @@ GEM
     paper_trail (15.1.0)
       activerecord (>= 6.1)
       request_store (~> 1.4)
+    pg (1.2.3)
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -370,8 +370,8 @@ DEPENDENCIES
   httparty (= 0.21.0)
   importmap-rails
   jsonapi-resources (~> 0.9.12)
-  mysql2 (~> 0.5)
   paper_trail
+  pg (= 1.2.3)
   pry (= 0.14.1)
   puma (~> 5.0)
   rack-cors

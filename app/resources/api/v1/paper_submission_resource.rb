@@ -3,7 +3,10 @@
 module Api
   module V1
     class PaperSubmissionResource < JSONAPI::Resource
-      attributes :title, :description, :active_status, :resourse_link, :paper_type, :created_at, :updated_at
+      attributes :id, :paper_id, :user_id, :score, :metadata, :result_metadata, :is_best_submission, :started_at,
+                 :submitted_at, :created_at, :updated_at, :evaluated_at, :slug
+      filter :paper_id
+      filter :user_id
     end
   end
 end

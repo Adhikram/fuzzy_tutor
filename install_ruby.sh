@@ -43,6 +43,6 @@ else
     echo "Ruby 3.0.6 is already installed."
 fi
 
-
+gem install pg -- --with-pg-config=/usr/pgsql-13/bin/pg_config
 # Install dependencies using bundle install
 bundle install

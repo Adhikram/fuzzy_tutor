@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       jsonapi_resources :papers, only: %i[show create destroy update] do
         member do
           get :preview
+          get :answer_preview
         end
       end
       jsonapi_resources :paper_elements, only: %i[index show create destroy update]
