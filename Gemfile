@@ -69,6 +69,8 @@ gem 'redis', '~> 4.2.5'
 gem 'redis-rails', '5.0.2'
 gem 'aws-sdk-sqs', '~> 1.0.0.rc11'
 
+gem 'unicorn'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
