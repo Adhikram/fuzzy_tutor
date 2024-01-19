@@ -8,7 +8,7 @@ default: &default
 
 development:
   <<: *default
-  database: fuzzy_tutor_dev
+  database: fuzzy_tutor
 
 test:
   <<: *default
